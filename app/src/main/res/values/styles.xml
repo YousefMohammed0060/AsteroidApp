@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="text_style">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <dimen name="text_size">14sp</dimen>
+</resources>
