@@ -1,6 +1,7 @@
 package com.example.nasa.main
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.nasa.Asteroid
 import com.example.nasa.Repository.AsteroidRepository
@@ -8,6 +9,7 @@ import com.example.nasa.api.PictureOfDay
 import com.example.nasa.database.DatabaseAsteroid
 import com.example.nasa.database.getDatabase
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 enum class Filter(val value: String) { SHOW_SAVED("saved"), SHOW_TODAY("today"), SHOW_WEEK("week") }
 
@@ -37,8 +39,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch{
-            _PicOfDay.value = asteroidRepository.loadPicOfDay()
-            asteroidRepository.refreshData()
+            try{
+                _PicOfDay.value = asteroidRepository.loadPicOfDay()
+                asteroidRepository.refreshData()
+            }catch (e :Exception){
+                Toast.makeText(application,e.message,Toast.LENGTH_SHORT).show()
+            }
         }
     }
     private val filter = MutableLiveData(Filter.SHOW_SAVED)
@@ -58,4 +64,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         viewModelJob.cancel()
     }
+
+
 }
